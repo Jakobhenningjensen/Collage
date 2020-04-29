@@ -48,16 +48,20 @@ if __name__=="__main__":
                 slze_sum = slze.mean(axis=0).mean(axis=0)
 
                 ### Get closest image from the collage ###
-                n_pic=10
+                n_pic=100
                 DISTS=np.zeros((n_pic,2))
                 DIFF = np.inf
 
                 img_col = np.zeros((n_col,m_col,3))
-                img_to_consider = np.random.choice(images,size=n_pic,replace=False)
+                #img_to_consider = np.random.choice(images,size=n_pic,replace=False)
+                img_to_consider=images[:n_pic]
+                PROPS=[]
                 for img in img_to_consider:
                     with Image.open(f"Resized_imgs/{img}") as im:
                         im = color.rgb2lab(np.array(im)) 
                         diff = calc_dist(slze,im)
+                        if np.isnan(diff):
+                            PROPS.append(img)
                         if diff<DIFF:
                             DIFF=diff
                             img_col=np.array(Image.open(f"Resized_imgs/{img}"))
