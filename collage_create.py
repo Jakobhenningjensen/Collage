@@ -30,6 +30,7 @@ def calc_dist(slze_in,col_in,K1=0.045,K2=0.015):
     return dE.mean()
 
 if __name__=="__main__":
+    TEEEEEEEEEEST
     images = os.listdir("Resized_imgs") #List of small images to build the collage
     img_in = Image.open("pic_in.jpg") #Big picture (to be "collaged")
     n,m = img_in.size #Size of input picture
