@@ -9,8 +9,6 @@ from joblib import Parallel, delayed
 from skimage import color
 import os
 
-
-
 def calc_dist(slze_in,col_in,K1=0.045,K2=0.015):
     #Returns the "distance" between the input image and the collage images
 
@@ -68,8 +66,6 @@ if __name__=="__main__":
 
     img_out=Image.fromarray(img_out)
     img_out.show()
-            
-
 
 
 
