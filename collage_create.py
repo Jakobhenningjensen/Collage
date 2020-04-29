@@ -66,6 +66,3 @@ if __name__=="__main__":
 
     img_out=Image.fromarray(img_out)
     img_out.show()
-
-
-
