@@ -7,7 +7,6 @@ from skimage import color
 import os
 
 if __name__=="__main__":
-    t=time.time()
     n_pic =-1
     col_images_list = os.listdir("Resized_imgs") #List of small images to build the collage
     img_in = Image.open("pic_in.jpg") #Big picture (to be "collaged")
@@ -33,7 +32,6 @@ if __name__=="__main__":
                 best_col = col_images_list[np.nanargmin(DISTS)]
                 img_out[i_start:i_end,j_start:j_end]=np.array(Image.open(f"Resized_imgs/{best_col}"))
 
-    print(f"Tid: {time.time()-t}")
     img_out=Image.fromarray(img_out)
     img_out.show()
 
