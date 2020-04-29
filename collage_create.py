@@ -3,12 +3,7 @@
 
 import numpy as np
 from PIL import Image #For Reading images
-import pickle
-from multiprocessing import Pool
-from joblib import Parallel, delayed
 from skimage import color
-import time
-import colour
 import os
 
 if __name__=="__main__":
