@@ -30,8 +30,8 @@ def calc_dist(slze_in,col_in,K1=0.045,K2=0.015):
     return dE.mean()
 
 if __name__=="__main__":
-    TEEEEEEEEEEST
-    images = os.listdir("Resized_imgs") #List of small images to build the collage
+
+    col_images_list = os.listdir("Resized_imgs") #List of small images to build the collage
     img_in = Image.open("pic_in.jpg") #Big picture (to be "collaged")
     n,m = img_in.size #Size of input picture
     n_col,m_col = 28,28 #Size of the collage-images
@@ -40,6 +40,7 @@ if __name__=="__main__":
 
     img_out=np.array(Image.new(size=(n_new,m_new),mode="RGB")) #output image
     img_in = np.array(img_in)
+    col_images_array = [color.rgb2lab(np.array(Image.open(f"Resized_imgs/{im}"))) for im in col_images_list]
     for j in range(n//n_col):
         for i in range(m//m_col):
 
@@ -49,21 +50,10 @@ if __name__=="__main__":
                 slze_sum = slze.mean(axis=0).mean(axis=0)
 
                 ### Get closest image from the collage ###
-                n_pic=10
-                DISTS=np.zeros((n_pic,2))
-                DIFF = np.inf
 
-                img_col = np.zeros((n_col,m_col,3))
-                img_to_consider = np.random.choice(images,size=n_pic,replace=False)
-                for img in img_to_consider:
-                    with Image.open(f"Resized_imgs/{img}") as im:
-                        im = color.rgb2lab(np.array(im)) 
-                        diff = calc_dist(slze,im)
-                        if diff<DIFF:
-                            DIFF=diff
-                            img_col=np.array(Image.open(f"Resized_imgs/{img}"))
-
-                img_out[i_start:i_end,j_start:j_end]=img_col
+                DISTS=[calc_dist(slze,img) for img in col_images_array] #Calculate "differences"
+                best_col = col_image_list[np.argmin(DISTS)]
+                img_out[i_start:i_end,j_start:j_end]=np.array(Image.open(f"Resized_imgs/{best_col}")))
 
     img_out=Image.fromarray(img_out)
     img_out.show()
