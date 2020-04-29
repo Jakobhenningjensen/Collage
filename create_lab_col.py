@@ -1,8 +1,3 @@
-"""
-Script creating the LAB colors for all collage-images and storing them in "img_list"
-
-"""
-
 
 from PIL import Image #For Reading images
 import numpy
@@ -17,5 +12,3 @@ img_list =np.zeros(shape=(len(imgs),n,m,3))
 
 for i,im in enumerate(imgs):
     img_list[i]=color.rgb2lab(np.array(Image.open(col_folder+im)))
-
-pickle.dump(img_list,open("img_list_lab","wb"))
