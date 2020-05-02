@@ -5,9 +5,13 @@ import numpy as np
 from PIL import Image #For Reading images
 from skimage import color
 import os
+import cProfile, pstats, io
+from pstats import SortKey
 
+#pr=cProfile.Profile()
+#pr.enable()
 if __name__=="__main__":
-    n_pic =-1
+    n_pic =10
     col_images_list = os.listdir("Resized_imgs") #List of small images to build the collage
     img_in = Image.open("pic_in.jpg") #Big picture (to be "collaged")
     n,m = img_in.size #Size of input picture
@@ -17,23 +21,27 @@ if __name__=="__main__":
 
     img_out=np.array(Image.new(size=(n_new,m_new),mode="RGB")) #output image
     img_in = np.array(img_in)
+
     col_images_array = [color.rgb2lab(np.array(Image.open(f"Resized_imgs/{im}"))) for im in col_images_list][:n_pic]
     for j in range(n//n_col):
         for i in range(m//m_col):
-
                 i_start,i_end,j_start,j_end = (i*n_col,(i+1)*n_col,j*m_col,(j+1)*m_col) #slize size
                 slze = img_in[i_start:i_end,j_start:j_end]   #Slize of image_input
                 slze = color.rgb2lab(slze)
-                slze_sum = slze.mean(axis=0).mean(axis=0)
-
                 ### Get closest image from the collage ###
-
+                
                 DISTS=[np.mean(color.deltaE_cmc(slze,img)) for img in col_images_array] #Calculate "differences"
+
                 best_col = col_images_list[np.nanargmin(DISTS)]
                 img_out[i_start:i_end,j_start:j_end]=np.array(Image.open(f"Resized_imgs/{best_col}"))
 
     img_out=Image.fromarray(img_out)
     img_out.show()
-
-
+"""
+pr.disable()
+s = io.StringIO()
+sortby = SortKey.CUMULATIVE
+ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+ps.print_stats()
+print(s.getvalue())"""
 
