@@ -5,11 +5,7 @@ import numpy as np
 from PIL import Image #For Reading images
 from skimage import color
 import os
-import cProfile, pstats, io
-from pstats import SortKey
 
-#pr=cProfile.Profile()
-#pr.enable()
 if __name__=="__main__":
     n_pic =10
     col_images_list = os.listdir("Resized_imgs") #List of small images to build the collage
@@ -37,11 +33,5 @@ if __name__=="__main__":
 
     img_out=Image.fromarray(img_out)
     img_out.show()
-"""
-pr.disable()
-s = io.StringIO()
-sortby = SortKey.CUMULATIVE
-ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-ps.print_stats()
-print(s.getvalue())"""
+
 
