@@ -6,7 +6,7 @@ from PIL import Image #For Reading images
 from skimage import color
 import os
 
-if __name__=="__main__":
+def main():
     n_pic =10
     col_images_list = os.listdir("Resized_imgs") #List of small images to build the collage
     img_in = Image.open("pic_in.jpg") #Big picture (to be "collaged")
@@ -35,3 +35,7 @@ if __name__=="__main__":
     img_out.show()
 
 
+
+
+if __name__=="__main__":
+    main()
